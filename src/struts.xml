@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="default" extends="struts-default" namespace="/">
+        <action name="login" class="action.UserAction" method="execute">
+            <result name="success" type="redirect">list.action</result>
+            <result name="login">/index.jsp</result>
+        </action>
+        <action name="regist" class="action.UserAction" method="regist">
+            <result name="success">/index.jsp</result>
+        </action>
+
+        <action name="upload" class="action.ProductAction" method="upload">
+            <interceptor-ref name="defaultStack">
+                <param name="fileUpload.maximumSize">500000000</param>
+                <param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-powerpoint,image/jpeg</param>
+                <param name="fileUpload.allowedExtensions">.txt,.jpg</param>
+            </interceptor-ref>
+            <result name="success">/details.jsp</result>
+            <result name="input">/error.jsp</result>
+        </action>
+
+        <action name="list" class="action.ProductAction" method="execute">
+            <result name="success">/sweater.jsp</result>
+        </action>
+
+        <action name="findOne" class="action.ProductAction" method="findOne">
+            <result name="success" >/detailone.jsp</result>
+        </action>
+
+        <action name="directOrder" class="action.OrderAction" method="execute">
+            <result name="success" type="redirect">listOrder.action</result>
+        </action>
+
+        <action name="listOrder" class="action.OrderAction" method="listOrder">
+            <result name="success">/orderInfo.jsp</result>
+        </action>
+
+        <action name="deleteOrder" class="action.OrderAction" method="deleteOrder">
+            <result name="success">/orderInfo.jsp</result>
+        </action>
+
+        <action name="modifyOrder" class="action.OrderAction" method="modifyOrder">
+            <result name="success">/orderInfo.jsp</result>
+        </action>
+
+        <action name="addBascket" class="action.BascketAction" method="execute">
+            <result name="success">/sweater.jsp</result>
+        </action>
+
+        <action name="listBascket" class="action.BascketAction" method="listPro">
+            <result name="success">/bascket.jsp</result>
+        </action>
+    </package>
+</struts>
