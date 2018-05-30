@@ -56,6 +56,7 @@
             <result name="success">/bascket.jsp</result>
         </action>
 
+
         <!--用户更新信息-->
         <action name="updateUser" class="action.UserAction" method="updateUserById">
             <result name="success">/userInfo.jsp</result>
@@ -64,6 +65,22 @@
         <!--商品查询-->
         <action name="search" class="action.ProductAction" method="search">
             <result name="success">/show.jsp</result>
+
+        <action name="delBascket" class="action.BascketAction" method="deletePro">
+            <result name="success">/bascket.jsp</result>
+        </action>
+
+        <action name="insertOrders" class="action.OrderAction" method="insertOrders">
+            <result name="success">/orderInfo.jsp</result>
+        </action>
+
+        <action name="sendPro" class="action.OrderAction" method="sendPro">
+            <result name="success">/orderInfo.jsp</result>
+        </action>
+
+        <action name="closeOrder" class="action.OrderAction" method="closeOrder">
+            <result name="success">/orderInfo.jsp</result>
+
         </action>
     </package>
 </struts>

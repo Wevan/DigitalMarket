@@ -37,14 +37,17 @@ public class BascketDao {
         ArrayList<Bascket> list = new ArrayList<Bascket>();
         try {
 
-            String sql = "SELECT * FROM bascket";
+            String sql = "SELECT * FROM bascket where uid=?";
             ps = conn.prepareStatement(sql);
+            ps.setInt(1,uid);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Bascket product = new Bascket();
                 product.setImage(rs.getString("image"));
                 product.setPname(rs.getString("pname"));
                 product.setPrice(rs.getDouble("price"));
+                product.setPid(rs.getInt("pid"));
+                product.setSid(rs.getInt("sid"));
                 product.setId(rs.getInt("id"));
                 list.add(product);
             }
@@ -52,5 +55,13 @@ public class BascketDao {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public boolean deletePro(int id) throws Exception{
+        String sql = "delete FROM bascket where pid=?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, id);
+        boolean a = ps.execute();
+        return a;
     }
 }

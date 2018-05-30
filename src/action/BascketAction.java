@@ -10,6 +10,15 @@ import java.util.ArrayList;
 public class BascketAction extends ActionSupport {
     private BascketService bascketService;
     private int pid;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getPid() {
         return pid;
@@ -33,6 +42,13 @@ public class BascketAction extends ActionSupport {
         ArrayList<Bascket> list =bascketService.list(uid);
 
         ActionContext.getContext().getSession().put("listBsk", list);
+        return SUCCESS;
+    }
+
+    public String deletePro() throws Exception {
+        bascketService=new BascketService();
+        bascketService.deletePro(id);
+        listPro();
         return SUCCESS;
     }
 }

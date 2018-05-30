@@ -135,7 +135,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 %>
 
                                 <div class="cart box_1">
-                                    <a href="checkout.jsp">
+                                    <a href="listBascket.action">
                                         <h3><span class="simpleCart_total">$<%=price%></span>
                                             (<span id="simpleCart_quantity"
                                                    class="simpleCart_quantity"><%=list.size()%></span>

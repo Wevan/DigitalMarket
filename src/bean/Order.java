@@ -4,6 +4,15 @@ import java.util.Date;
 
 public class Order {
     private int id;
+    private int active;
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
 
     public int getId() {
         return id;
@@ -11,6 +20,15 @@ public class Order {
 
     public void setId(int id) {
         this.id = id;
+    }
+    private boolean send;
+
+    public boolean isSend() {
+        return send;
+    }
+
+    public void setSend(boolean send) {
+        this.send = send;
     }
 
     private int uid;

@@ -181,8 +181,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="check">
                         <div class="col-md-3 cart-total">
                             <%
-
-
+                                ArrayList<Order> listOrder =new OrderService().listOrder((Integer) session.getAttribute("uid"));
                                 System.out.println("OrderInfo jsp has msg " + listOrder.size());
                             %>
                             <a class="continue" href="#">返回首页（未添加）</a>

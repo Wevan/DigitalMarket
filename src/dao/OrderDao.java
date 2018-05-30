@@ -17,20 +17,7 @@ public class OrderDao {
         int a = 0;
         try {
 
-            String sql = "insert into orderMsg(addr,bname,order_time,phone,state,total,uid,pid,sid,pname,ecode,price,image) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-//            System.out.println("OrderDao has "+order.getAddr());
-//            System.out.println(order.getBname());
-//            System.out.println(order.getOrder_time());
-//            System.out.println(order.getPhone());
-//            System.out.println(order.isState());
-//            System.out.println(order.getTotal());
-//            System.out.println(order.getUid());
-//            System.out.println(order.getPid());
-//            System.out.println(order.getSid());
-//            System.out.println(order.getPname());
-//            System.out.println(order.getEcode());
-//            System.out.println(order.getPrice());
-//            System.out.println(order.getImage());
+            String sql = "insert into orderMsg(addr,bname,order_time,phone,state,total,uid,pid,sid,pname,ecode,price,image,send,active) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             Date date = new Date();
             Timestamp timeStamep = new Timestamp(date.getTime());
             ps = conn.prepareStatement(sql);
@@ -47,9 +34,43 @@ public class OrderDao {
             ps.setString(11,order.getEcode());
             ps.setDouble(12,order.getPrice());
             ps.setString(13,order.getImage());
+            ps.setBoolean(14, false);
+            ps.setInt(15,0);
+
             a = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return a;
+    }
+
+    public int[] insertOrders(ArrayList<Order> orders) throws Exception{
+        int a[]=new int[orders.size()];
+        BascketDao bascketDao=new BascketDao();
+        for (int i = 0; i < orders.size(); i++) {
+            String sql = "insert into orderMsg(addr,bname,order_time,phone,state,total,uid,pid,sid,pname,ecode,price,image,send,active) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            Date date = new Date();
+            Timestamp timeStamep = new Timestamp(date.getTime());
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, orders.get(i).getAddr());
+            ps.setString(2, orders.get(i).getBname());
+            ps.setTimestamp(3, timeStamep);
+            ps.setString(4, orders.get(i).getPhone());
+            ps.setBoolean(5, orders.get(i).isState());
+            ps.setDouble(6, orders.get(i).getTotal());
+            ps.setInt(7,orders.get(i).getUid());
+            ps.setInt(8,orders.get(i).getPid());
+            ps.setInt(9,orders.get(i).getSid());
+            ps.setString(10,orders.get(i).getPname());
+            ps.setString(11,orders.get(i).getEcode());
+            ps.setDouble(12,orders.get(i).getPrice());
+            ps.setString(13,orders.get(i).getImage());
+            ps.setBoolean(14, false);
+            ps.setInt(15,0);
+            boolean b=bascketDao.deletePro(orders.get(i).getPid());
+            System.out.println("delete bckt "+b+","+orders.get(i).getPid());
+            a[i] = ps.executeUpdate();
+
         }
         return a;
     }
@@ -58,9 +79,10 @@ public class OrderDao {
         ArrayList<Order> list = new ArrayList<Order>();
         try {
 
-            String sql = "SELECT * FROM ordermsg where uid=?";
+            String sql = "SELECT * FROM ordermsg where uid=? or sid=?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1,uid);
+            ps.setInt(2,uid);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Order order = new Order();
@@ -78,6 +100,9 @@ public class OrderDao {
                 order.setEcode(rs.getString("ecode"));
                 order.setPrice(rs.getDouble("price"));
                 order.setImage(rs.getString("image"));
+                order.setActive(rs.getInt("active"));
+                order.setSend(rs.getBoolean("send"));
+
                 list.add(order);
             }
         } catch (SQLException e) {
@@ -103,6 +128,25 @@ public class OrderDao {
         ps.setInt(4, order.getId());
         int a=ps.executeUpdate();
         System.out.println("OrderDao modify "+order.getBname()+order.getPhone()+order.getAddr()+order.getId()+","+a);
+        return a;
+    }
+
+    public int sendPro(int id) throws Exception{
+        String sql = "update ordermsg set send=true where id=?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1,id);
+        int a=ps.executeUpdate();
+        System.out.println("OrderDao send Modify "+a);
+        return a;
+    }
+
+    public int closeOrder(int id,int acode) throws Exception{
+        String sql = "update ordermsg set active=? where id=?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1,acode);
+        ps.setInt(2,id);
+        int a=ps.executeUpdate();
+        System.out.println("OrderDao closeOrder Modify "+a);
         return a;
     }
 }
