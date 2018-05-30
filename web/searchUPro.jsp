@@ -1,19 +1,27 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="bean.Product" %>
+<%@ page import="com.opensymphony.xwork2.ActionContext" %>
+<%@ page import="dao.BascketDao" %>
+<%@ page import="bean.Bascket" %>
+<%@ page import="dao.ProductDao" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE HTML>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Input</title>
+    <title>Sweater</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="keywords" content="Gretong Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
-    <script type="application/x-javascript"> addEventListener("load", function () {
-        setTimeout(hideURLbar, 0);
-    }, false);
+    <script type="application/x-javascript">
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
 
-    function hideURLbar() {
-        window.scrollTo(0, 1);
-    } </script>
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        } </script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
     <!-- Custom CSS -->
@@ -103,7 +111,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <!-- /top_bg -->
             </div>
             <div class="header_bg">
-
                 <div class="header">
                     <div class="head-t">
                         <div class="logo">
@@ -112,51 +119,43 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <!-- start header_right -->
                         <div class="header_right">
                             <div class="rgt-bottom">
-                                <div class="log">
-                                    <div class="login">
-                                        <div id="loginContainer"><a id="loginButton" class=""><span>Login</span></a>
-                                            <div id="loginBox" style="display: none;">
-                                                <form id="loginForm">
-                                                    <fieldset id="body">
-                                                        <fieldset>
-                                                            <label for="email">Email Address</label>
-                                                            <input type="text" name="email" id="email">
-                                                        </fieldset>
-                                                        <fieldset>
-                                                            <label for="password">Password</label>
-                                                            <input type="password" name="password" id="password">
-                                                        </fieldset>
-                                                        <input type="submit" id="login" value="Sign in">
-                                                        <label for="checkbox"><input type="checkbox" id="checkbox"> <i>Remember
-                                                            me</i></label>
-                                                    </fieldset>
-                                                    <span><a href="#">Forgot your password?</a></span>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="reg">
-                                    <a href="register.jsp">REGISTER</a>
+                                    <b> 欢迎：<a
+                                            href="userInfo.jsp"> <b>${sessionScope.user.name}</b> </a>
+                                    </b>
                                 </div>
+
+                                <%
+                                    List<Product> userProList = (List<Product>) request.getAttribute("uproducts");
+                                    BascketDao dao = new BascketDao();
+                                    int uid = (int) session.getAttribute("uid");
+                                    ArrayList<Bascket> list = dao.listPro(uid);
+                                    double price = 0.0;
+                                    for (int i = 0; i < list.size(); i++) {
+                                        price += list.get(i).getPrice();
+                                    }
+                                %>
+
                                 <div class="cart box_1">
-                                    <a href="checkout.jsp">
-                                        <h3><span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity"
-                                                                                               class="simpleCart_quantity">0</span>
+                                    <a href="listBascket.action">
+                                        <h3><span class="">$<%=price%></span>
+                                            (<span id=""
+                                                   class=""><%=list.size()%></span>
                                             items)<img src="images/bag.png" alt=""></h3>
                                     </a>
-                                    <p><a href="javascript:;" class="simpleCart_empty">(empty card)</a></p>
+                                    <p></p>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="create_btn">
-                                    <a href="checkout.jsp">CHECKOUT</a>
+                                    <a href="listBascket.action">CHECKOUT</a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="search">
-                                <form>
-                                    <input type="text" value="" placeholder="search...">
-                                    <input type="submit" value="">
+                                <form action="searchUPro.action" method="post">
+                                    <input type="text" value="" placeholder="查询..." name="message">
+                                    <input type="submit">
                                 </form>
                             </div>
                             <div class="clearfix"></div>
@@ -164,66 +163,74 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="clearfix"></div>
                     </div>
                 </div>
-
             </div>
             <!-- //header-ends -->
-
             <!--content-->
             <div class="content">
                 <div class="women_main">
                     <!-- start content -->
-                    <div class="grids">
-                        <div class="progressbar-heading grids-heading">
-                            <h2>修改个人信息</h2>
+                    <div class="w_content">
+                        <div class="women">
+                            <a href="#"><h4>Enthecwear - <span><%=userProList.size()%> items</span></h4></a>
+                            <ul class="w_nav">
+                                <li>Sort :</li>
+                                <li><a class="active" href="#">popular</a></li>
+                                |
+                                <li><a href="#">new </a></li>
+                                |
+                                <li><a href="#">discount</a></li>
+                                |
+                                <li><a href="#">price: Low High </a></li>
+                                <div class="clear"></div>
+                            </ul>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="panel panel-widget forms-panel">
-                            <div class="forms">
-                                <div class="form-grids widget-shadow" data-example-id="basic-forms">
-                                    <div class="form-title">
-                                        <h4>个人信息</h4>
-                                    </div>
-                                    <div class="form-body">
-                                        <form action="/updateUser.action?user.id=${sessionScope.user.id}" method="post">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">用户名</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       placeholder="用户名" name="user.username"
-                                                       value="${sessionScope.user.username}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">密码</label>
-                                                <input type="text" class="form-control" id="exampleInputPassword1"
-                                                       placeholder="密码" name="user.password"
-                                                       value="${sessionScope.user.password}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">电话</label>
-                                                <input type="text" class="form-control" placeholder="电话"
-                                                       name="user.phone" value="${sessionScope.user.phone}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">邮编</label>
-                                                <input type="text" class="form-control" placeholder="邮编"
-                                                       name="user.ecode" value="${sessionScope.user.ecode}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">收货人信息</label>
-                                                <input type="text" class="form-control" placeholder="收货人信息"
-                                                       name="user.name" value="${sessionScope.user.name}"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">收获地址</label>
-                                                <input type="text" class="form-control" placeholder="收获地址"
-                                                       name="user.address" value="${sessionScope.user.address}"/>
-                                            </div>
-                                            <button type="submit" class="btn btn-default">提交</button>
-                                        </form>
+                        <!-- grids_of_4 -->
+                        <%
+                            for (int i = 0; i < userProList.size(); i = i + 4) {
+
+                        %>
+                        <div class="grids_of_4">
+                            <%
+                                for (int j = i; j < i + 4 && j < userProList.size(); j++) {
+                            %>
+                            <div class="grid1_of_4">
+                                <div class="content_box"><a href="/modifyPro.jsp?id=<%=userProList.get(j).getId()%>">
+                                    <img src="<%=userProList.get(j).getImage()%>" alt="" height="150px">
+                                </a>
+                                    <h4>
+                                        <a href="/modifyPro.jsp?id=<%=userProList.get(j).getId()%>"><%=userProList.get(j).getPname()%>
+                                        </a></h4>
+                                    <p>商家号：<%=userProList.get(j).getSid()%>
+                                    </p>
+                                    <div class="grid_1 simpleCart_shelfItem">
+
+                                        <div class="item_add">
+                                            <span class="item_price">
+                                            <h6>￥ <%=userProList.get(j).getPrice()%></h6>
+                                            </span>
+                                        </div>
+                                        <div class="item_add"><span class="item_price"><a
+                                                href="deletePro.action?product.id=<%=userProList.get(j).getId()%>">删除商品</a></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                            <%
+                                }
+                            %>
 
+                            <div class="clearfix"></div>
+                        </div>
+                        <%
+                            }
+                        %>
+
+                        <!-- end grids_of_4 -->
+
+
+                    </div>
+                    <div class="clearfix"></div>
                     <!-- end content -->
                     <div class="foot-top">
 
@@ -262,7 +269,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </div>
                         </div>
                         <div class="clearfix"></div>
-
                     </div>
                     <div class="footer">
                         <div class="col-md-3 cust">
@@ -301,7 +307,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
                     </div>
                 </div>
-
             </div>
             <!--content-->
         </div>

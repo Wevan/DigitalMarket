@@ -81,6 +81,12 @@ public class OrderAction extends ActionSupport {
         return SUCCESS;
     }
 
+    public String confirmPro() throws Exception{
+        orderService=new OrderService();
+        orderService.confirmPro(order.getId());
+        return SUCCESS;
+    }
+
     public String closeOrder() throws Exception{
         orderService=new OrderService();
         orderService.colseOrder(order.getId(),order.getActive());

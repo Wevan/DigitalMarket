@@ -1,7 +1,9 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Checkout</title>
+    <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="keywords" content="Gretong Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -88,7 +90,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 |
                                 <li><a href="contact.html">Contact</a></li>
                                 |
-                                <li><a href="checkout.html">Delivery information</a></li>
+                                <li><a href="checkout.jsp">Delivery information</a></li>
                             </ul>
                         </div>
                         <div class="top_left">
@@ -106,7 +108,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="header">
                     <div class="head-t">
                         <div class="logo">
-                            <a href="index.html"><img src="images/logo.png" class="img-responsive" alt=""> </a>
+                            <a href="index.jsp"><img src="images/logo.png" class="img-responsive" alt=""> </a>
                         </div>
                         <!-- start header_right -->
                         <div class="header_right">
@@ -136,10 +138,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     </div>
                                 </div>
                                 <div class="reg">
-                                    <a href="register.html">REGISTER</a>
+                                    <a href="register.jsp">REGISTER</a>
                                 </div>
                                 <div class="cart box_1">
-                                    <a href="checkout.html">
+                                    <a href="checkout.jsp">
                                         <h3><span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity"
                                                                                                class="simpleCart_quantity">0</span>
                                             items)<img src="images/bag.png" alt=""></h3>
@@ -148,7 +150,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="create_btn">
-                                    <a href="checkout.html">CHECKOUT</a>
+                                    <a href="checkout.jsp">CHECKOUT</a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -171,102 +173,131 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="content">
                 <div class="women_main">
                     <!-- start content -->
-                    <div class="check">
-                        <div class="col-md-3 cart-total">
-                            <a class="continue" href="#">Continue to basket</a>
-                            <div class="price-details">
-                                <h3>Price Details</h3>
-                                <span>Total</span>
-                                <span class="total1">6200.00</span>
-                                <span>Discount</span>
-                                <span class="total1">---</span>
-                                <span>Delivery Charges</span>
-                                <span class="total1">150.00</span>
-                                <div class="clearfix"></div>
-                            </div>
-                            <ul class="total_price">
-                                <li class="last_price"><h4>TOTAL</h4></li>
-                                <li class="last_price"><span>6350.00</span></li>
-                                <div class="clearfix"></div>
-                            </ul>
+                    <div class="registration">
+                        <div class="registration_left">
+                            <h2>新用户 <span> 注册 </span></h2>
+                            <!-- [if IE]
+                                < link rel='stylesheet' type='text/css' href='ie.css'/>
+                             [endif] -->
 
+                            <!-- [if lt IE 7]>
+                                < link rel='stylesheet' type='text/css' href='ie6.css'/>
+                            <! [endif] -->
+                            <script>
+                                (function () {
 
-                            <div class="clearfix"></div>
-                            <a class="order" href="#">Place Order</a>
-                            <div class="total-item">
-                                <h3>OPTIONS</h3>
-                                <h4>COUPONS</h4>
-                                <a class="cpns" href="#">Apply Coupons</a>
-                                <p><a href="register.html">Log In</a> to use accounts - linked coupons</p>
+                                    // Create input element for testing
+                                    var inputs = document.createElement('input');
+
+                                    // Create the supports object
+                                    var supports = {};
+
+                                    supports.autofocus = 'autofocus' in inputs;
+                                    supports.required = 'required' in inputs;
+                                    supports.placeholder = 'placeholder' in inputs;
+
+                                    // Fallback for autofocus attribute
+                                    if (!supports.autofocus) {
+
+                                    }
+
+                                    // Fallback for required attribute
+                                    if (!supports.required) {
+
+                                    }
+
+                                    // Fallback for placeholder attribute
+                                    if (!supports.placeholder) {
+
+                                    }
+
+                                    // Change text inside send button on submit
+                                    var send = document.getElementById('register-submit');
+                                    if (send) {
+                                        send.onclick = function () {
+                                            this.innerHTML = '...Sending';
+                                        }
+                                    }
+
+                                })();
+                            </script>
+
+                            <div class="registration_form">
+                                <!-- Form -->
+                                <form action="/regist.action" method="post">
+                                    <div>
+                                        <label>
+                                            <input placeholder="Username" type="text" tabindex="1" required=""
+                                                   autofocus="" name="user.username">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input placeholder="password" type="text" tabindex="2" required=""
+                                                   autofocus="" name="user.password">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input placeholder="收货地址" type="text" tabindex="3" required=""
+                                                   name="user.address">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input placeholder="收货人名" type="text" tabindex="3" required=""
+                                                   name="user.name">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input placeholder="收货电话" type="text" tabindex="4" required=""
+                                                   name="user.phone">
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input placeholder="邮编" type="text" tabindex="4" required=""
+                                                   name="user.ecode">
+                                        </label>
+                                    </div>
+                                    <s:fielderror></s:fielderror>
+                                    <div>
+                                        <input type="submit" value="注册">
+                                    </div>
+                                    <div class="sky-form">
+                                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>i agree to
+                                            shoppe.com &nbsp;<a class="terms" href="#"> terms of service</a> </label>
+                                    </div>
+                                </form>
+                                <!-- /Form -->
                             </div>
                         </div>
-                        <div class="col-md-9 cart-items">
-                            <h1>My Shopping Bag (2)</h1>
-                            <script>$(document).ready(function (c) {
-                                $('.close1').on('click', function (c) {
-                                    $('.cart-header').fadeOut('slow', function (c) {
-                                        $('.cart-header').remove();
-                                    });
-                                });
-                            });
-                            </script>
-                            <div class="cart-header0" style="position: relative">
-                                <div class="close1"></div>
-                                <div class="cart-sec simpleCart_shelfItem">
-                                    <div class="cart-item cyc">
-                                        <img src="images/8.jpg" class="img-responsive" alt="">
+                        <div class="registration_left">
+                            <h2>已有帐户</h2>
+                            <div class="registration_form">
+                                <!-- Form -->
+                                <form action="login.action">
+                                    <div>
+                                        <label>
+                                            <input placeholder="Username" type="email" tabindex="3" required="" name="user.username">
+                                        </label>
                                     </div>
-                                    <div class="cart-item-info">
-                                        <h3><a href="#">Mountain Hopper(XS R034)</a><span>Model No: 3578</span></h3>
-                                        <ul class="qty">
-                                            <li><p>Size : 5</p></li>
-                                            <li><p>Qty : 1</p></li>
-                                        </ul>
-
-                                        <div class="delivery">
-                                            <p>Service Charges : Rs.100.00</p>
-                                            <span>Delivered in 2-3 bussiness days</span>
-                                            <div class="clearfix"></div>
-                                        </div>
+                                    <div>
+                                        <label>
+                                            <input placeholder="Password" type="password" tabindex="4" required="" name="user.password">
+                                        </label>
                                     </div>
-                                    <div class="clearfix"></div>
-
-                                </div>
+                                    <div>
+                                        <input type="submit" value="登录">
+                                    </div>
+                                    <div class="forget">
+                                        <a href="#">忘记密码</a>
+                                    </div>
+                                </form>
+                                <!-- /Form -->
                             </div>
-                            <script>$(document).ready(function (c) {
-                                $('.close0').on('click', function (c) {
-                                    $('.cart-header0').fadeOut('slow', function (c) {
-                                        $('.cart-header0').remove();
-                                    });
-                                });
-                            });
-                            </script>
-                            <div class="cart-header2">
-                                <div class="close2"></div>
-                                <div class="cart-sec simpleCart_shelfItem">
-                                    <div class="cart-item cyc">
-                                        <img src="images/11.jpg" class="img-responsive" alt="">
-                                    </div>
-                                    <div class="cart-item-info">
-                                        <h3><a href="#">Mountain Hopper(XS R034)</a><span>Model No: 3578</span></h3>
-                                        <ul class="qty">
-                                            <li><p>Size : 5</p></li>
-                                            <li><p>Qty : 1</p></li>
-                                        </ul>
-                                        <div class="delivery">
-                                            <p>Service Charges : Rs.100.00</p>
-                                            <span>Delivered in 2-3 bussiness days</span>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-
-                                </div>
-                            </div>
-
                         </div>
-
-
                         <div class="clearfix"></div>
                     </div>
 
@@ -315,8 +346,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <h4>CUSTOMER CARE</h4>
                             <li><a href="contact.html">Help Center</a></li>
                             <li><a href="faq.html">FAQ</a></li>
-                            <li><a href="details.html">How To Buy</a></li>
-                            <li><a href="checkout.html">Delivery</a></li>
+                            <li><a href="details.jsp">How To Buy</a></li>
+                            <li><a href="checkout.jsp">Delivery</a></li>
                         </div>
                         <div class="col-md-2 abt">
                             <h4>ABOUT US</h4>
@@ -327,10 +358,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>
                         <div class="col-md-2 myac">
                             <h4>MY ACCOUNT</h4>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="checkout.html">My Cart</a></li>
-                            <li><a href="checkout.html">Order History</a></li>
-                            <li><a href="details.html">Payment</a></li>
+                            <li><a href="register.jsp">Register</a></li>
+                            <li><a href="checkout.jsp">My Cart</a></li>
+                            <li><a href="checkout.jsp">Order History</a></li>
+                            <li><a href="details.jsp">Payment</a></li>
                         </div>
                         <div class="col-md-5 our-st">
                             <div class="our-left">
@@ -347,7 +378,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
                     </div>
                 </div>
-
             </div>
             <!--content-->
         </div>
@@ -361,38 +391,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
             <ul id="menu">
-                <li><a href="index.html"><i class="fa fa-tachometer"></i> <span>Home</span></a></li>
-                <li id="menu-academico"><a href="#"><i class="fa fa-table"></i> <span> New Arrivals</span> <span
-                        class="fa fa-angle-right" style="float: right"></span></a>
-                    <ul id="menu-academico-sub">
-                        <li id="menu-academico-avaliacoes"><a href="shoes.html">Shoes</a></li>
-                        <li id="menu-academico-avaliacoes"><a href="products.html">Watches</a></li>
-                        <li id="menu-academico-boletim"><a href="sunglasses.html">Sunglasses</a></li>
-                    </ul>
-                </li>
-                <li id="menu-academico"><a href="sunglasses.html"><i class="fa fa-file-text-o"></i>
-                    <span>Sunglasses</span></a></li>
-                <li><a href="sweater.html"><i class="lnr lnr-pencil"></i> <span>Sweater</span></a></li>
-                <li id="menu-academico"><a href="catalog.html"><i class="fa fa-file-text-o"></i>
-                    <span>Catalog</span></a></li>
-                <li id="menu-academico"><a href="shoes.html"><i class="lnr lnr-book"></i> <span>Shoes</span></a></li>
-                <li><a href="bags.html"><i class="lnr lnr-envelope"></i> <span>Bags</span></a></li>
-                <li><a href="products.html"><i class="lnr lnr-chart-bars"></i> <span>Watches</span></a></li>
-                <li id="menu-academico"><a href="#"><i class="lnr lnr-layers"></i> <span>Tabs & Calender</span> <span
-                        class="fa fa-angle-right" style="float: right"></span></a>
-                    <ul id="menu-academico-sub">
-                        <li id="menu-academico-avaliacoes"><a href="tabs.html">Tabs</a></li>
-                        <li id="menu-academico-boletim"><a href="calender.html">Calender</a></li>
+                <li><a href="index.jsp"><i class="fa fa-tachometer"></i> <span>主页</span></a></li>
 
-                    </ul>
+                <li id="menu-academico">
+                    <a href="sweater.jsp"><i class="fa fa-file-text-o"></i>
+                        <span>所有商品</span></a></li>
+                <li><a href="input.jsp"><i class="lnr lnr-pencil"></i> <span>添加商品</span></a></li>
+
+                <li>
+                    <a href="orderInfo.jsp"><i class="lnr lnr-chart-bars"></i>
+                        <span>所有订单</span>
+                    </a>
                 </li>
-                <li><a href="#"><i class="lnr lnr-chart-bars"></i> <span>Forms</span> <span class="fa fa-angle-right"
-                                                                                            style="float: right"></span></a>
-                    <ul>
-                        <li><a href="input.html"> Input</a></li>
-                        <li><a href="validation.html">Validation</a></li>
-                    </ul>
+                <li>
+                    <a href="userProList.action"><i class="lnr lnr-layers"></i>
+                        <span>我的商品</span>
+                    </a>
                 </li>
+
             </ul>
         </div>
     </div>

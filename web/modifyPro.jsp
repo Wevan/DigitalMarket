@@ -1,13 +1,13 @@
 <%@ page import="bean.Product" %>
-<%@ page import="bean.Order" %>
+<%@ page import="dao.ProductDao" %>
+<%@ page import="dao.BascketDao" %>
+<%@ page import="bean.Bascket" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.opensymphony.xwork2.ActionContext" %>
-<%@ page import="service.OrderService" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Checkout</title>
+    <title>Input</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="keywords" content="Gretong Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -112,56 +112,46 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="header">
                     <div class="head-t">
                         <div class="logo">
-                            <a href="index.html"><img src="images/logo.png" class="img-responsive" alt=""> </a>
+                            <a href="index.jsp"><img src="images/logo.png" class="img-responsive" alt=""> </a>
                         </div>
                         <!-- start header_right -->
                         <div class="header_right">
                             <div class="rgt-bottom">
-                                <div class="log">
-                                    <div class="login">
-                                        <div id="loginContainer"><a id="loginButton" class=""><span>Login</span></a>
-                                            <div id="loginBox" style="display: none;">
-                                                <form id="loginForm">
-                                                    <fieldset id="body">
-                                                        <fieldset>
-                                                            <label for="email">Email Address</label>
-                                                            <input type="text" name="email" id="email">
-                                                        </fieldset>
-                                                        <fieldset>
-                                                            <label for="password">Password</label>
-                                                            <input type="password" name="password" id="password">
-                                                        </fieldset>
-                                                        <input type="submit" id="login" value="Sign in">
-                                                        <label for="checkbox"><input type="checkbox" id="checkbox"> <i>Remember
-                                                            me</i></label>
-                                                    </fieldset>
-                                                    <span><a href="#">Forgot your password?</a></span>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="reg">
-                                    <a href="register.html">REGISTER</a>
+                                    <p>
+                                        <a href="userInfo.jsp">欢迎： ${sessionScope.user.name} </a>
+                                    </p>
                                 </div>
+                                <%
+                                    BascketDao dao = new BascketDao();
+                                    int uid = (int) session.getAttribute("uid");
+                                    System.out.println("Sweater jsp bascket get uid " + uid);
+                                    ArrayList<Bascket> list = dao.listPro(uid);
+                                    double price = 0.0;
+                                    for (int i = 0; i < list.size(); i++) {
+                                        price += list.get(i).getPrice();
+                                    }
+                                %>
+                                %>
                                 <div class="cart box_1">
-                                    <a href="checkout.jsp">
-                                        <h3><span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity"
-                                                                                               class="simpleCart_quantity">0</span>
+                                    <a href="listBascket.action">
+                                        <h3><span class="">$<%=price%></span>
+                                            (<span id=""
+                                                   class=""><%=list.size()%></span>
                                             items)<img src="images/bag.png" alt=""></h3>
                                     </a>
-                                    <p><a href="javascript:;" class="simpleCart_empty">(empty card)</a></p>
+                                    <p></p>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="create_btn">
-                                    <a href="checkout.jsp">CHECKOUT</a>
+                                    <a href="listBascket.action">CHECKOUT</a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="search">
-                                <form>
-                                    <input type="text" value="" placeholder="search...">
-                                    <input type="submit" value="">
+                                <form action="searchUPro.action" method="post">
+                                    <input type="text" value="" placeholder="查询..." name="message">
+                                    <input type="submit">
                                 </form>
                             </div>
                             <div class="clearfix"></div>
@@ -177,107 +167,46 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="content">
                 <div class="women_main">
                     <!-- start content -->
-
-                    <div class="check">
-                        <div class="col-md-3 cart-total">
-                            <%
-                                ArrayList<Order> listOrder =new OrderService().listOrder((Integer) session.getAttribute("uid"));
-                                System.out.println("OrderInfo jsp has msg " + listOrder.size());
-                            %>
-                            <a class="continue" href="#">返回首页（未添加）</a>
-                            <div class="price-details">
-                                <h3>订单中心</h3>
-                                <span>订单数</span>
-                                <span class="total1"><%=listOrder.size()%></span>
-                                <span>折扣</span>
-                                <span class="total1">---</span>
-                                <span>特权</span>
-                                <span class="total1">无</span>
-                                <div class="clearfix"></div>
-                            </div>
-                            <ul class="total_price">
-                                <li class="last_price"><h4>会员</h4></li>
-                                <li class="last_price"><span>无</span></li>
-                                <div class="clearfix"></div>
-                            </ul>
-
-
-                            <div class="clearfix"></div>
-
-
-                            <a class="order" href="directOrder.action" disabled>提交订单</a>
-                            <div class="total-item">
-                                <h3>注意</h3>
-                                <h4>COUPONS</h4>
-                                <a class="cpns" href="#">Apply</a>
-                                <p><a href="register.html">Log In</a> to use accounts - linked coupons</p>
-                            </div>
+                    <div class="grids">
+                        <div class="progressbar-heading grids-heading">
+                            <h2>修改商品</h2>
                         </div>
-                        <div class="col-md-9 cart-items">
-                            <h1>订单列表(<%=listOrder.size()%>)</h1>
-
-                            <%
-                                for (int i = 0; i < listOrder.size(); i++) {
-                            %>
-
-                            <script>
-                                $(document).ready(function (c) {
-                                    $('.close<%=i%>').on('click', function (c) {
-                                        $('.cart-header<%=i%>').fadeOut('slow', function (c) {
-                                            $('.cart-header<%=i%>').remove();
-                                        });
-                                    });
-                                });
-
-                            </script>
-
-                            <div class="cart-header<%=i%>" style="position: relative">
-                                <div class="close<%=i%>"
-                                     style="top: -11px;background: url('/images/close_1.png') no-repeat 0px 0px;cursor: pointer;width: 28px;height: 28px;position: absolute;right: 0px;top: 0px;-webkit-transition: color 0.2s ease-in-out;-moz-transition: color 0.2s ease-in-out;-o-transition: color 0.2s ease-in-out;transition: color 0.2s ease-in-out;"></div>
-                                <div class="cart-sec simpleCart_shelfItem">
-                                    <div class="cart-item cyc">
-                                        <img src="<%=listOrder.get(i).getImage()%>" class="img-responsive" alt="">
+                        <div class="panel panel-widget forms-panel">
+                            <div class="forms">
+                                <div class="form-grids widget-shadow" data-example-id="basic-forms">
+                                    <div class="form-title">
+                                        <h4>商品信息</h4>
                                     </div>
-                                    <div class="cart-item-info">
-                                        <h3><a href="#"><%=listOrder.get(i).getPname()%>
-                                        </a>
-                                            <span>商品号 ： <%=listOrder.get(i).getPid()%></span></h3>
-                                        <ul class="qty">
-                                            <li><p><%=listOrder.get(i).getTotal()%>
-                                            </p></li>
-                                            <li><p>电话 ：<%=listOrder.get(i).getPhone()%><<br>
-                                                地址 : <%=listOrder.get(i).getAddr()%>
-                                            </p></li>
-                                        </ul>
+                                    <div class="form-body">
+                                        <%
+                                            int id= Integer.parseInt(request.getParameter("id"));
+                                            Product product=new ProductDao().findOne(id);
+                                            System.out.println("Modify page id is "+product.getTotalNum());
+                                        %>
+                                        <form action="/modifyPro.action?product.id=<%=id%>" method="post">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">名称</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="商品名称" name="product.pname" value="<%=product.getPname()%>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">简介</label>
+                                                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="商品简介" name="product.desc" value="<%=product.getDesc()%>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">价格(精确到小数点后两位，如10.00)</label>
+                                                <input type="text" class="form-control" placeholder="单价" name="product.price" value="<%=product.getPrice()%>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">库存(填写整数)</label>
+                                                <input type="text" class="form-control" placeholder="库存" name="product.totalNum" value="<%=product.getTotalNum()%>">
+                                            </div>
 
-                                        <div class="delivery">
-                                            <p>
-                                            <form action="deleteOrder.action" method="post">
-                                                <input value="<%=listOrder.get(i).getId()%>" style="display: none"
-                                                       name="order.id">
-                                                <button class="btn btn-default">删除</button>
-                                            </form>
-                                            </p>
-                                            <span>
-
-                                                <form action="modifyOrder.jsp?id=<%=listOrder.get(i).getId()%>&bname=<%=listOrder.get(i).getBname()%>&phone=<%=listOrder.get(i).getPhone()%>&addr=<%=listOrder.get(i).getAddr()%>" method="post">
-                                                    <button class="btn btn-default">修改</button>
-                                                </form>
-                                            </span>
-                                            <div class="clearfix"></div>
-                                        </div>
+                                            <button type="submit" class="btn btn-default">提交</button>
+                                        </form>
                                     </div>
-                                    <div class="clearfix"></div>
-
                                 </div>
                             </div>
-                            <%
-                                }
-                            %>
                         </div>
-
-
-                        <div class="clearfix"></div>
                     </div>
 
                     <!-- end content -->
@@ -325,7 +254,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <h4>CUSTOMER CARE</h4>
                             <li><a href="contact.html">Help Center</a></li>
                             <li><a href="faq.html">FAQ</a></li>
-                            <li><a href="details.html">How To Buy</a></li>
+                            <li><a href="details.jsp">How To Buy</a></li>
                             <li><a href="checkout.jsp">Delivery</a></li>
                         </div>
                         <div class="col-md-2 abt">
@@ -337,10 +266,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>
                         <div class="col-md-2 myac">
                             <h4>MY ACCOUNT</h4>
-                            <li><a href="register.html">Register</a></li>
+                            <li><a href="register.jsp">Register</a></li>
                             <li><a href="checkout.jsp">My Cart</a></li>
                             <li><a href="checkout.jsp">Order History</a></li>
-                            <li><a href="details.html">Payment</a></li>
+                            <li><a href="details.jsp">Payment</a></li>
                         </div>
                         <div class="col-md-5 our-st">
                             <div class="our-left">
@@ -371,9 +300,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
             <ul id="menu">
-                <li><a href="index.html"><i class="fa fa-tachometer"></i> <span>Home</span></a></li>
+                <li><a href="index.jsp"><i class="fa fa-tachometer"></i> <span>主页</span></a></li>
 
-                <li><a href="sweater.html"><i class="lnr lnr-pencil"></i> <span>Sweater</span></a></li>
+                <li id="menu-academico">
+                    <a href="sweater.jsp"><i class="fa fa-file-text-o"></i>
+                        <span>所有商品</span></a></li>
+                <li><a href="input.jsp"><i class="lnr lnr-pencil"></i> <span>添加商品</span></a></li>
+
+                <li>
+                    <a href="orderInfo.jsp"><i class="lnr lnr-chart-bars"></i>
+                        <span>所有订单</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="userProList.action"><i class="lnr lnr-layers"></i>
+                        <span>我的商品</span>
+                    </a>
+                </li>
 
             </ul>
         </div>

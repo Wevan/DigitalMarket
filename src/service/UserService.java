@@ -4,6 +4,7 @@ import bean.User;
 import dao.UserDao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserService {
     private UserDao dao;
@@ -36,5 +37,10 @@ public class UserService {
     public int updateInfo(User user) {
         dao = new UserDao();
         return dao.update(user);
+    }
+
+    public List<User> userList() throws Exception{
+        dao=new UserDao();
+        return dao.userList();
     }
 }

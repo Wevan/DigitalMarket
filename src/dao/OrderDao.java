@@ -17,7 +17,7 @@ public class OrderDao {
         int a = 0;
         try {
 
-            String sql = "insert into orderMsg(addr,bname,order_time,phone,state,total,uid,pid,sid,pname,ecode,price,image,send,active) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "insert into orderMsg(addr,bname,order_time,phone,state,total,uid,pid,sid,pname,ecode,price,image,send,active,note) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             Date date = new Date();
             Timestamp timeStamep = new Timestamp(date.getTime());
             ps = conn.prepareStatement(sql);
@@ -36,6 +36,7 @@ public class OrderDao {
             ps.setString(13,order.getImage());
             ps.setBoolean(14, false);
             ps.setInt(15,0);
+            ps.setString(16,order.getNote());
 
             a = ps.executeUpdate();
         } catch (SQLException e) {
@@ -48,7 +49,7 @@ public class OrderDao {
         int a[]=new int[orders.size()];
         BascketDao bascketDao=new BascketDao();
         for (int i = 0; i < orders.size(); i++) {
-            String sql = "insert into orderMsg(addr,bname,order_time,phone,state,total,uid,pid,sid,pname,ecode,price,image,send,active) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "insert into orderMsg(addr,bname,order_time,phone,state,total,uid,pid,sid,pname,ecode,price,image,send,active,note) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             Date date = new Date();
             Timestamp timeStamep = new Timestamp(date.getTime());
             ps = conn.prepareStatement(sql);
@@ -67,6 +68,7 @@ public class OrderDao {
             ps.setString(13,orders.get(i).getImage());
             ps.setBoolean(14, false);
             ps.setInt(15,0);
+            ps.setString(16,"默认");
             boolean b=bascketDao.deletePro(orders.get(i).getPid());
             System.out.println("delete bckt "+b+","+orders.get(i).getPid());
             a[i] = ps.executeUpdate();
@@ -102,6 +104,7 @@ public class OrderDao {
                 order.setImage(rs.getString("image"));
                 order.setActive(rs.getInt("active"));
                 order.setSend(rs.getBoolean("send"));
+                order.setNote(rs.getString("note"));
 
                 list.add(order);
             }
@@ -120,12 +123,13 @@ public class OrderDao {
     }
 
     public int modifyOrder(Order order) throws Exception{
-        String sql = "update ordermsg set bname=?,phone=?,addr=? where id=?";
+        String sql = "update ordermsg set bname=?,phone=?,addr=?,note=? where id=?";
         ps = conn.prepareStatement(sql);
         ps.setString(1,order.getBname());
         ps.setString(2,order.getPhone());
         ps.setString(3,order.getAddr());
-        ps.setInt(4, order.getId());
+        ps.setInt(5, order.getId());
+        ps.setString(4,order.getNote());
         int a=ps.executeUpdate();
         System.out.println("OrderDao modify "+order.getBname()+order.getPhone()+order.getAddr()+order.getId()+","+a);
         return a;
@@ -147,6 +151,15 @@ public class OrderDao {
         ps.setInt(2,id);
         int a=ps.executeUpdate();
         System.out.println("OrderDao closeOrder Modify "+a);
+        return a;
+    }
+
+    public int confirmPro(int id) throws Exception{
+        String sql = "update ordermsg set state=true where id=?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1,id);
+        int a=ps.executeUpdate();
+        System.out.println("OrderDao state Modify "+a);
         return a;
     }
 }

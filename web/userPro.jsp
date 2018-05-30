@@ -1,18 +1,27 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="bean.Product" %>
+<%@ page import="com.opensymphony.xwork2.ActionContext" %>
+<%@ page import="dao.BascketDao" %>
+<%@ page import="bean.Bascket" %>
+<%@ page import="dao.ProductDao" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE HTML>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Sunglasses</title>
+    <title>Sweater</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="keywords" content="Gretong Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
-    <script type="application/x-javascript"> addEventListener("load", function () {
-        setTimeout(hideURLbar, 0);
-    }, false);
+    <script type="application/x-javascript">
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
 
-    function hideURLbar() {
-        window.scrollTo(0, 1);
-    } </script>
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        } </script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css'/>
     <!-- Custom CSS -->
@@ -34,6 +43,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!--pie-chart--->
     <script src="js/pie-chart.js" type="text/javascript"></script>
     <script type="text/javascript">
+
         $(document).ready(function () {
             $('#demo-pie-1').pieChart({
                 barColor: '#3bb2d0',
@@ -67,6 +77,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
         });
+
     </script>
 </head>
 <body>
@@ -78,21 +89,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="header-section">
                 <!-- top_bg -->
                 <div class="top_bg">
+
                     <div class="header_top">
                         <div class="top_right">
                             <ul>
-                                <li><a href="contact.html">help</a></li>
+                                <li><a href="contact.html">帮助</a></li>
                                 |
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="contact.html">联系我们</a></li>
                                 |
-                                <li><a href="checkout.jsp">Delivery information</a></li>
+                                <li><a href="checkout.jsp">物流</a></li>
                             </ul>
                         </div>
                         <div class="top_left">
-                            <h2><span></span> Call us : 032 2352 782</h2>
+                            <h2><span></span> Call us : 155 3661 6387</h2>
                         </div>
                         <div class="clearfix"></div>
                     </div>
+
                 </div>
                 <div class="clearfix"></div>
                 <!-- /top_bg -->
@@ -106,51 +119,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <!-- start header_right -->
                         <div class="header_right">
                             <div class="rgt-bottom">
-                                <div class="log">
-                                    <div class="login">
-                                        <div id="loginContainer"><a id="loginButton" class=""><span>Login</span></a>
-                                            <div id="loginBox" style="display: none;">
-                                                <form id="loginForm">
-                                                    <fieldset id="body">
-                                                        <fieldset>
-                                                            <label for="email">Email Address</label>
-                                                            <input type="text" name="email" id="email">
-                                                        </fieldset>
-                                                        <fieldset>
-                                                            <label for="password">Password</label>
-                                                            <input type="password" name="password" id="password">
-                                                        </fieldset>
-                                                        <input type="submit" id="login" value="Sign in">
-                                                        <label for="checkbox"><input type="checkbox" id="checkbox"> <i>Remember
-                                                            me</i></label>
-                                                    </fieldset>
-                                                    <span><a href="#">Forgot your password?</a></span>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="reg">
-                                    <a href="register.html">REGISTER</a>
+                                    <b> 欢迎：<a
+                                            href="userInfo.jsp"> <b>${sessionScope.user.name}</b> </a>
+                                    </b>
                                 </div>
+
+                                <%
+                                    ArrayList<Product> userProList= (ArrayList<Product>) session.getAttribute("userProList");
+                                    System.out.println("UserPro jsp "+userProList.size());
+                                    BascketDao dao = new BascketDao();
+                                    int uid = (int) session.getAttribute("uid");
+                                    System.out.println("Sweater jsp bascket get uid " + uid);
+                                    ArrayList<Bascket> list = dao.listPro(uid);
+                                    double price = 0.0;
+                                    for (int i = 0; i < list.size(); i++) {
+                                        price += list.get(i).getPrice();
+                                    }
+                                %>
+
                                 <div class="cart box_1">
-                                    <a href="checkout.jsp">
-                                        <h3><span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity"
-                                                                                               class="simpleCart_quantity">0</span>
+                                    <a href="listBascket.action">
+                                        <h3><span class="simpleCart_total">$<%=price%></span>
+                                            (<span id="simpleCart_quantity"
+                                                   class="simpleCart_quantity"><%=list.size()%></span>
                                             items)<img src="images/bag.png" alt=""></h3>
                                     </a>
-                                    <p><a href="javascript:;" class="simpleCart_empty">(empty card)</a></p>
+                                    <p></p>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="create_btn">
-                                    <a href="checkout.jsp">CHECKOUT</a>
+                                    <a href="listBascket.action">CHECKOUT</a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="search">
-                                <form>
-                                    <input type="text" value="" placeholder="search...">
-                                    <input type="submit" value="">
+                                <form action="searchUPro.action" method="post">
+                                    <input type="text" value="" placeholder="查询..." name="message">
+                                    <input type="submit">
                                 </form>
                             </div>
                             <div class="clearfix"></div>
@@ -166,7 +173,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <!-- start content -->
                     <div class="w_content">
                         <div class="women">
-                            <a href="#"><h4>Enthecwear - <span>4449 items</span></h4></a>
+                            <a href="#"><h4>Enthecwear - <span><%=userProList.size()%> items</span></h4></a>
                             <ul class="w_nav">
                                 <li>Sort :</li>
                                 <li><a class="active" href="#">popular</a></li>
@@ -181,186 +188,45 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <div class="clearfix"></div>
                         </div>
                         <!-- grids_of_4 -->
+                        <%
+                            for (int i = 0; i < userProList.size(); i = i + 4) {
+
+                        %>
                         <div class="grids_of_4">
+                            <%
+                                for (int j = i; j < i + 4 && j < userProList.size(); j++) {
+                            %>
                             <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/w5.jpg" class="img-responsive" alt="">
+                                <div class="content_box"><a href="/modifyPro.jsp?id=<%=userProList.get(j).getId()%>">
+                                    <img src="<%=userProList.get(j).getImage()%>" alt="" height="150px">
                                 </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
+                                    <h4>
+                                        <a href="/modifyPro.jsp?id=<%=userProList.get(j).getId()%>"><%=userProList.get(j).getPname()%>
+                                        </a></h4>
+                                    <p>商家号：<%=userProList.get(j).getSid()%>
+                                    </p>
                                     <div class="grid_1 simpleCart_shelfItem">
 
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $109.00</h6></span>
+                                        <div class="item_add">
+                                            <span class="item_price">
+                                            <h6>￥ <%=userProList.get(j).getPrice()%></h6>
+                                            </span>
                                         </div>
                                         <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/w6.jpg" class="img-responsive" alt="">
-                                </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
-                                    <div class="grid_1 simpleCart_shelfItem">
-
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $95.00</h6></span></div>
-                                        <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/w7.jpg" class="img-responsive" alt="">
-                                </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
-                                    <div class="grid_1 simpleCart_shelfItem">
-
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $68.00</h6></span></div>
-                                        <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/w8.jpg" class="img-responsive" alt="">
-                                </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
-                                    <div class="grid_1 simpleCart_shelfItem">
-
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $74.00</h6></span></div>
-                                        <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="grids_of_4">
-                            <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/g1.jpg" class="img-responsive" alt="">
-                                </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
-                                    <div class="grid_1 simpleCart_shelfItem">
-
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $80.00</h6></span></div>
-                                        <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/g2.jpg" class="img-responsive" alt="">
-                                </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
-                                    <div class="grid_1 simpleCart_shelfItem">
-
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $65.00</h6></span></div>
-                                        <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/g3.jpg" class="img-responsive" alt="">
-                                </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
-                                    <div class="grid_1 simpleCart_shelfItem">
-
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $90.00</h6></span></div>
-                                        <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/g4.jpg" class="img-responsive" alt="">
-                                </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
-                                    <div class="grid_1 simpleCart_shelfItem">
-
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $75.00</h6></span></div>
-                                        <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="grids_of_4">
-                            <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/g5.jpg" class="img-responsive" alt="">
-                                </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
-                                    <div class="grid_1 simpleCart_shelfItem">
-
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $99.00</h6></span></div>
-                                        <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/g6.jpg" class="img-responsive" alt="">
-                                </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
-                                    <div class="grid_1 simpleCart_shelfItem">
-
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $76.00</h6></span></div>
-                                        <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/g1.jpg" class="img-responsive" alt="">
-                                </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
-                                    <div class="grid_1 simpleCart_shelfItem">
-
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $58.00</h6></span></div>
-                                        <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid1_of_4">
-                                <div class="content_box"><a href="details.jsp">
-                                    <img src="images/g2.jpg" class="img-responsive" alt="">
-                                </a>
-                                    <h4><a href="details.jsp"> Duis autem</a></h4>
-                                    <p>It is a long established fact that</p>
-                                    <div class="grid_1 simpleCart_shelfItem">
-
-                                        <div class="item_add"><span class="item_price"><h6>ONLY $112.00</h6></span>
+                                                href="deletePro.action?product.id=<%=userProList.get(j).getId()%>">删除商品</a></span>
                                         </div>
-                                        <div class="item_add"><span class="item_price"><a
-                                                href="#">add to cart</a></span></div>
                                     </div>
                                 </div>
                             </div>
+                            <%
+                                }
+                            %>
+
                             <div class="clearfix"></div>
                         </div>
-
+                        <%
+                            }
+                        %>
 
                         <!-- end grids_of_4 -->
 
@@ -405,7 +271,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </div>
                         </div>
                         <div class="clearfix"></div>
-
                     </div>
                     <div class="footer">
                         <div class="col-md-3 cust">
@@ -424,7 +289,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>
                         <div class="col-md-2 myac">
                             <h4>MY ACCOUNT</h4>
-                            <li><a href="register.html">Register</a></li>
+                            <li><a href="register.jsp">Register</a></li>
                             <li><a href="checkout.jsp">My Cart</a></li>
                             <li><a href="checkout.jsp">Order History</a></li>
                             <li><a href="details.jsp">Payment</a></li>
@@ -444,7 +309,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
                     </div>
                 </div>
-
             </div>
             <!--content-->
         </div>
@@ -458,38 +322,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
             <ul id="menu">
-                <li><a href="index.jsp"><i class="fa fa-tachometer"></i> <span>Home</span></a></li>
-                <li id="menu-academico"><a href="#"><i class="fa fa-table"></i> <span> New Arrivals</span> <span
-                        class="fa fa-angle-right" style="float: right"></span></a>
-                    <ul id="menu-academico-sub">
-                        <li id="menu-academico-avaliacoes"><a href="shoes.html">Shoes</a></li>
-                        <li id="menu-academico-avaliacoes"><a href="products.html">Watches</a></li>
-                        <li id="menu-academico-boletim"><a href="sunglasses.html">Sunglasses</a></li>
-                    </ul>
-                </li>
-                <li id="menu-academico"><a href="sunglasses.html"><i class="fa fa-file-text-o"></i>
-                    <span>Sunglasses</span></a></li>
-                <li><a href="sweater.jsp"><i class="lnr lnr-pencil"></i> <span>Sweater</span></a></li>
-                <li id="menu-academico"><a href="catalog.html"><i class="fa fa-file-text-o"></i>
-                    <span>Catalog</span></a></li>
-                <li id="menu-academico"><a href="shoes.html"><i class="lnr lnr-book"></i> <span>Shoes</span></a></li>
-                <li><a href="bags.html"><i class="lnr lnr-envelope"></i> <span>Bags</span></a></li>
-                <li><a href="products.html"><i class="lnr lnr-chart-bars"></i> <span>Watches</span></a></li>
-                <li id="menu-academico"><a href="#"><i class="lnr lnr-layers"></i> <span>Tabs & Calender</span> <span
-                        class="fa fa-angle-right" style="float: right"></span></a>
-                    <ul id="menu-academico-sub">
-                        <li id="menu-academico-avaliacoes"><a href="tabs.html">Tabs</a></li>
-                        <li id="menu-academico-boletim"><a href="calender.html">Calender</a></li>
+                <li><a href="index.jsp"><i class="fa fa-tachometer"></i> <span>主页</span></a></li>
 
-                    </ul>
+                <li id="menu-academico">
+                    <a href="sweater.jsp"><i class="fa fa-file-text-o"></i>
+                        <span>所有商品</span></a></li>
+                <li><a href="input.jsp"><i class="lnr lnr-pencil"></i> <span>添加商品</span></a></li>
+
+                <li>
+                    <a href="orderInfo.jsp"><i class="lnr lnr-chart-bars"></i>
+                        <span>所有订单</span>
+                    </a>
                 </li>
-                <li><a href="#"><i class="lnr lnr-chart-bars"></i> <span>Forms</span> <span class="fa fa-angle-right"
-                                                                                            style="float: right"></span></a>
-                    <ul>
-                        <li><a href="input.jsp"> Input</a></li>
-                        <li><a href="validation.html">Validation</a></li>
-                    </ul>
+                <li>
+                    <a href="userProList.action"><i class="lnr lnr-layers"></i>
+                        <span>我的商品</span>
+                    </a>
                 </li>
+
             </ul>
         </div>
     </div>

@@ -141,7 +141,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     </div>
                                 </div>
                                 <div class="reg">
-                                    <a href="register.html">REGISTER</a>
+                                    <a href="register.jsp">REGISTER</a>
                                 </div>
                                 <div class="cart box_1">
                                     <a href="checkout.jsp">
@@ -181,7 +181,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="col-md-3 cart-total">
                             <%
                                 Product product=(Product)session.getAttribute("directBuy");
-                                System.out.println("Check jsp has "+product.getPname());
+                                String name = request.getParameter("name");
 
                                 Order order=new Order();
                                 order.setPid(product.getId());
@@ -192,6 +192,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 order.setImage(product.getImage());
                                 order.setTotal(product.getPrice()+6);
                                 order.setPrice(product.getPrice());
+                                order.setNote(name);
                                 session.setAttribute("directOrder",order);
 
                             %>
@@ -221,7 +222,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <h3>注意</h3>
                                 <h4>COUPONS</h4>
                                 <a class="cpns" href="#">Apply</a>
-                                <p><a href="register.html">Log In</a> to use accounts - linked coupons</p>
+                                <p><a href="register.jsp">Log In</a> to use accounts - linked coupons</p>
                             </div>
                         </div>
                         <div class="col-md-9 cart-items">
@@ -247,6 +248,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                             <li><p>Size : 5</p></li>
                                             <li><p>Qty : 1</p></li>
                                         </ul>
+
+
 
                                         <div class="delivery">
                                             <p>单价 : <%=product.getPrice()%></p>
@@ -329,7 +332,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>
                         <div class="col-md-2 myac">
                             <h4>MY ACCOUNT</h4>
-                            <li><a href="register.html">Register</a></li>
+                            <li><a href="register.jsp">Register</a></li>
                             <li><a href="checkout.jsp">My Cart</a></li>
                             <li><a href="checkout.jsp">Order History</a></li>
                             <li><a href="details.html">Payment</a></li>
@@ -363,9 +366,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
             <ul id="menu">
-                <li><a href="index.html"><i class="fa fa-tachometer"></i> <span>Home</span></a></li>
+                <li><a href="index.jsp"><i class="fa fa-tachometer"></i> <span>主页</span></a></li>
 
-                <li><a href="sweater.html"><i class="lnr lnr-pencil"></i> <span>Sweater</span></a></li>
+                <li id="menu-academico">
+                    <a href="sweater.jsp"><i class="fa fa-file-text-o"></i>
+                        <span>所有商品</span></a></li>
+                <li><a href="input.jsp"><i class="lnr lnr-pencil"></i> <span>添加商品</span></a></li>
+
+                <li>
+                    <a href="orderInfo.jsp"><i class="lnr lnr-chart-bars"></i>
+                        <span>所有订单</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="userProList.action"><i class="lnr lnr-layers"></i>
+                        <span>我的商品</span>
+                    </a>
+                </li>
 
             </ul>
         </div>

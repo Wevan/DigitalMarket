@@ -89,21 +89,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="header-section">
                 <!-- top_bg -->
                 <div class="top_bg">
+
                     <div class="header_top">
                         <div class="top_right">
                             <ul>
-                                <li><a href="contact.html">help</a></li>
+                                <li><a href="contact.html">帮助</a></li>
                                 |
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="contact.html">联系我们</a></li>
                                 |
-                                <li><a href="checkout.jsp">Delivery information</a></li>
+                                <li><a href="checkout.jsp">物流</a></li>
                             </ul>
                         </div>
                         <div class="top_left">
-                            <h2><span></span> Call us : 032 2352 782</h2>
+                            <h2><span></span> Call us : 155 3661 6387</h2>
                         </div>
                         <div class="clearfix"></div>
                     </div>
+
                 </div>
                 <div class="clearfix"></div>
                 <!-- /top_bg -->
@@ -132,7 +134,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                    class="simpleCart_quantity"></span>
                                             items)<img src="images/bag.png" alt=""></h3>
                                     </a>
-                                    <p><a href="javascript:;" class="simpleCart_empty">(empty card)</a></p>
+                                    <p></p>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="create_btn">
@@ -181,12 +183,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             System.out.println(productList.size());
                             int count = productList.size();
 
-
+                            if (productList.size()==0){
                         %>
+                        <p>没有该种商品</p>
                         <%
+                            }
                             for (int i = 0; i < count; i = i + 4) {
-
-
                         %>
                         <div class="grids_of_4">
                             <%
@@ -286,7 +288,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>
                         <div class="col-md-2 myac">
                             <h4>MY ACCOUNT</h4>
-                            <li><a href="register.html">Register</a></li>
+                            <li><a href="register.jsp">Register</a></li>
                             <li><a href="checkout.jsp">My Cart</a></li>
                             <li><a href="checkout.jsp">Order History</a></li>
                             <li><a href="details.jsp">Payment</a></li>
@@ -321,9 +323,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <ul id="menu">
                 <li><a href="index.jsp"><i class="fa fa-tachometer"></i> <span>主页</span></a></li>
 
-                <li id="menu-academico"><a href="sunglasses.html"><i class="fa fa-file-text-o"></i>
-                    <span>Sunglasses</span></a></li>
-                <li><a href="sweater.jsp"><i class="lnr lnr-pencil"></i> <span>Sweater</span></a></li>
+                <li id="menu-academico">
+                    <a href="sweater.jsp"><i class="fa fa-file-text-o"></i>
+                        <span>所有商品</span></a></li>
+                <li><a href="input.jsp"><i class="lnr lnr-pencil"></i> <span>添加商品</span></a></li>
+
+                <li>
+                    <a href="orderInfo.jsp"><i class="lnr lnr-chart-bars"></i>
+                        <span>所有订单</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="userProList.action"><i class="lnr lnr-layers"></i>
+                        <span>我的商品</span>
+                    </a>
+                </li>
 
             </ul>
         </div>

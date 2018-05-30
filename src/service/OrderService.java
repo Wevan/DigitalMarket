@@ -37,6 +37,12 @@ public class OrderService {
         orderDao=new OrderDao();
         orderDao.sendPro(id);
     }
+
+    public void confirmPro(int id) throws Exception{
+        orderDao=new OrderDao();
+        orderDao.confirmPro(id);
+    }
+
     public void colseOrder(int id,int acode) throws Exception{
         orderDao=new OrderDao();
         orderDao.closeOrder(id, acode);

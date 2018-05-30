@@ -6,12 +6,27 @@
 
 <struts>
     <package name="default" extends="struts-default" namespace="/">
+
+        <interceptors>
+            <interceptor name="loginInter" class="action.LoginInterceptor">
+            </interceptor>
+            <interceptor-stack name="mydefault">
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="loginInter" />
+            </interceptor-stack>
+        </interceptors>
+
         <action name="login" class="action.UserAction" method="execute">
             <result name="success" type="redirect">list.action</result>
+            <result name="input">/index.jsp</result>
             <result name="login">/index.jsp</result>
         </action>
         <action name="regist" class="action.UserAction" method="regist">
             <result name="success">/index.jsp</result>
+            <result name="input">/register.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="upload" class="action.ProductAction" method="upload">
@@ -22,65 +37,144 @@
             </interceptor-ref>
             <result name="success">/details.jsp</result>
             <result name="input">/error.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="list" class="action.ProductAction" method="execute">
             <result name="success">/sweater.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="findOne" class="action.ProductAction" method="findOne">
             <result name="success">/detailone.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="directOrder" class="action.OrderAction" method="execute">
             <result name="success" type="redirect">listOrder.action</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="listOrder" class="action.OrderAction" method="listOrder">
             <result name="success">/orderInfo.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="deleteOrder" class="action.OrderAction" method="deleteOrder">
             <result name="success">/orderInfo.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="modifyOrder" class="action.OrderAction" method="modifyOrder">
             <result name="success">/orderInfo.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="addBascket" class="action.BascketAction" method="execute">
             <result name="success">/sweater.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="listBascket" class="action.BascketAction" method="listPro">
             <result name="success">/bascket.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
 
         <!--用户更新信息-->
         <action name="updateUser" class="action.UserAction" method="updateUserById">
             <result name="success">/userInfo.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <!--商品查询-->
         <action name="search" class="action.ProductAction" method="search">
             <result name="success">/show.jsp</result>
-
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
+        </action>
         <action name="delBascket" class="action.BascketAction" method="deletePro">
             <result name="success">/bascket.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="insertOrders" class="action.OrderAction" method="insertOrders">
             <result name="success">/orderInfo.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="sendPro" class="action.OrderAction" method="sendPro">
             <result name="success">/orderInfo.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
+        </action>
+
+        <action name="confirmPro" class="action.OrderAction" method="confirmPro">
+            <result name="success">/orderInfo.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
 
         <action name="closeOrder" class="action.OrderAction" method="closeOrder">
             <result name="success">/orderInfo.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
+        </action>
 
+        <action name="userProList" class="action.ProductAction" method="userProList">
+            <result name="success">/userPro.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
+        </action>
+
+        <action name="deletePro" class="action.ProductAction" method="deletePro">
+            <result name="success">/userPro.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
+        </action>
+
+        <action name="modifyPro" class="action.ProductAction" method="modifyPro">
+            <result name="success">/userPro.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
+        </action>
+
+        <action name="searchUPro" class="action.ProductAction" method="searchUPro">
+            <result name="success">/searchUPro.jsp</result>
+            <result name="error">/index.jsp</result>
+            <interceptor-ref name="defaultStack" />
+            <interceptor-ref name="loginInter" />
         </action>
     </package>
 </struts>

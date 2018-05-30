@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDao {
     private Connection conn = JDBCUtil.getConnection();
@@ -90,5 +92,19 @@ public class UserDao {
             e.printStackTrace();
         }
         return row;
+    }
+
+    public List<User> userList() throws Exception{
+        List<User> userList=new ArrayList<>();
+        String sql = "select * from user";
+        ps = conn.prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            User user = new User();
+            user.setUsername(rs.getString("username"));
+            user.setPhone(rs.getString("phone"));
+            userList.add(user);
+        }
+        return userList;
     }
 }

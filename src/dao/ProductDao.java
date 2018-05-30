@@ -68,6 +68,7 @@ public class ProductDao {
                 product.setPname(rs.getString("pname"));
                 product.setPrice(rs.getDouble("price"));
                 product.setSid(rs.getInt("sid"));
+                product.setTotalNum(rs.getInt("totalnum"));
                 product.setDesc(rs.getString("description"));
                 product.setId(pid);
             }
@@ -105,4 +106,81 @@ public class ProductDao {
         }
         return productList;
     }
+
+    public List<Product> userProList(int id) {
+        List<Product> userProList = new ArrayList<>();
+
+        String sql = "select *\n" +
+                "from product\n" +
+                "where sid=?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setPname(rs.getString("pname"));
+                product.setImage(rs.getString("image"));
+                product.setPrice(rs.getDouble("price"));
+                product.setSid(rs.getInt("sid"));
+                product.setTotalNum(rs.getInt("totalnum"));
+                product.setDesc(rs.getString("description"));
+                product.setId(rs.getInt("id"));
+                userProList.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userProList;
+    }
+
+    public boolean deletePro(int id) throws Exception{
+        String sql = "delete FROM product where id=?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, id);
+        boolean a = ps.execute();
+        return a;
+    }
+
+    public int modifyPro(Product product) throws Exception{
+        String sql = "update product set pname=?,price=?,description=?,totalnum=? where id=?";
+        ps = conn.prepareStatement(sql);
+        ps.setString(1,product.getPname());
+        ps.setDouble(2,product.getPrice());
+        ps.setString(3,product.getDesc());
+        ps.setInt(4,product.getTotalNum());
+        ps.setInt(5, product.getId());
+        int a=ps.executeUpdate();
+        return a;
+    }
+
+    public List<Product> findUPro(String message,int sid) {
+        List<Product> productList = new ArrayList<>();
+        //language=MySQL
+        String sql = "select *\n" +
+                "from product\n" +
+                "where pname like ?\n" +
+                "   or description like ? AND sid=?;";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + message + "%");
+            ps.setString(2, "%" + message + "%");
+            ps.setInt(3,sid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setImage(rs.getString("image"));
+                product.setPname(rs.getString("pname"));
+                product.setPrice(rs.getDouble("price"));
+                product.setSid(rs.getInt("sid"));
+                product.setDesc(rs.getString("description"));
+                product.setId(rs.getInt("id"));
+                productList.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
+
 }

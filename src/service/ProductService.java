@@ -28,4 +28,24 @@ public class ProductService {
         dao = new ProductDao();
         return dao.findProduct(message);
     }
+
+    public List<Product> uerProList(int id) {
+        dao = new ProductDao();
+        return dao.userProList(id);
+    }
+
+    public void deletePro(int id) throws Exception{
+        dao=new ProductDao();
+        dao.deletePro(id);
+    }
+
+    public void modifyPro(Product product) throws Exception{
+        dao=new ProductDao();
+        dao.modifyPro(product);
+    }
+
+    public List<Product> searchUPro(String message,int sid) {
+        dao = new ProductDao();
+        return dao.findUPro(message,sid);
+    }
 }

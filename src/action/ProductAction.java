@@ -90,6 +90,8 @@ public class ProductAction extends ActionSupport {
             e.printStackTrace();
         }
         getProduct().setImage("\\upload\\" + uploadImageFileName);
+        int uid=(Integer) ActionContext.getContext().getSession().get("uid");
+        getProduct().setSid(uid);
         productService = new ProductService();
         productService.insert(product);
         ActionContext.getContext().getSession().put("product", product);
@@ -108,6 +110,38 @@ public class ProductAction extends ActionSupport {
         System.out.println(message);
         productService = new ProductService();
         ActionContext.getContext().put("products", productService.searchProduct(message));
+        return SUCCESS;
+    }
+
+    public String userProList(){
+        productService=new ProductService();
+        int uid=(Integer) ActionContext.getContext().getSession().get("uid");
+        ActionContext.getContext().getSession().put("userProList", productService.uerProList(uid));
+        ArrayList<Product> productList= (ArrayList<Product>) productService.uerProList(uid);
+
+        return SUCCESS;
+    }
+
+    public String deletePro() throws Exception {
+        productService=new ProductService();
+        productService.deletePro(product.getId());
+        userProList();
+        return SUCCESS;
+    }
+
+    public String modifyPro() throws Exception{
+        productService=new ProductService();
+        productService.modifyPro(product);
+        System.out.println("modify msg "+product.getTotalNum());
+        userProList();
+        return SUCCESS;
+    }
+
+    public String searchUPro() {
+        System.out.println(message);
+        productService = new ProductService();
+        int uid=(Integer) ActionContext.getContext().getSession().get("uid");
+        ActionContext.getContext().put("uproducts", productService.searchUPro(message,uid));
         return SUCCESS;
     }
 }

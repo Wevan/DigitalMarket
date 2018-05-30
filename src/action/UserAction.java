@@ -9,7 +9,9 @@ import utils.JDBCUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class UserAction extends ActionSupport {
     private User user;
@@ -36,14 +38,17 @@ public class UserAction extends ActionSupport {
         System.out.println("a is " + chzuname + chzupass);
         userService = new UserService();
         User u = userService.login(chzuname, chzupass);
-        if (u != null) {
+        if (u.getPassword() != null) {
             ActionContext.getContext().getSession().put("user", u);
             ActionContext.getContext().getSession().put("uid", u.getId());
             return SUCCESS;
         } else {
+            addFieldError("login","用户名和密码不匹配");
             return LOGIN;
         }
     }
+
+
 
 
     public String regist() throws Exception {
@@ -55,6 +60,28 @@ public class UserAction extends ActionSupport {
         return SUCCESS;
     }
 
+
+
+    public void validateRegist() throws Exception {
+        userService=new UserService();
+        ArrayList<User> users= (ArrayList<User>) userService.userList();
+        for (int i = 0; i < users.size(); i++) {
+            if (this.user.getUsername().equals(users.get(i).getUsername())){
+                this.addFieldError("username", "用户名已存在");
+                if (this.user.getPhone().equals(users.get(i).getPhone())){
+                    addFieldError("phone", "手机号已经注册");
+                }
+                break;
+            }
+            if (this.user.getPhone().equals(users.get(i).getPhone())){
+                this.addFieldError("phone", "手机号已经注册");
+                if (this.user.getUsername().equals(users.get(i).getUsername())){
+                    addFieldError("username", "用户名已存在");
+                }
+                break;
+            }
+        }
+    }
 
     public String updateUserById() throws Exception {
         System.out.println(getUser().getId());

@@ -1,3 +1,6 @@
+<%@ page import="bean.Bascket" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="dao.BascketDao" %>
 <!DOCTYPE HTML>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -85,15 +88,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="header_top">
                         <div class="top_right">
                             <ul>
-                                <li><a href="contact.html">help</a></li>
+                                <li><a href="contact.html">帮助</a></li>
                                 |
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="contact.html">联系我们</a></li>
                                 |
-                                <li><a href="checkout.jsp">Delivery information</a></li>
+                                <li><a href="checkout.jsp">物流</a></li>
                             </ul>
                         </div>
                         <div class="top_left">
-                            <h2><span></span> Call us : 032 2352 782</h2>
+                            <h2><span></span> Call us : 155 3661 6387</h2>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -112,51 +115,41 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <!-- start header_right -->
                         <div class="header_right">
                             <div class="rgt-bottom">
-                                <div class="log">
-                                    <div class="login">
-                                        <div id="loginContainer"><a id="loginButton" class=""><span>Login</span></a>
-                                            <div id="loginBox" style="display: none;">
-                                                <form id="loginForm">
-                                                    <fieldset id="body">
-                                                        <fieldset>
-                                                            <label for="email">Email Address</label>
-                                                            <input type="text" name="email" id="email">
-                                                        </fieldset>
-                                                        <fieldset>
-                                                            <label for="password">Password</label>
-                                                            <input type="password" name="password" id="password">
-                                                        </fieldset>
-                                                        <input type="submit" id="login" value="Sign in">
-                                                        <label for="checkbox"><input type="checkbox" id="checkbox"> <i>Remember
-                                                            me</i></label>
-                                                    </fieldset>
-                                                    <span><a href="#">Forgot your password?</a></span>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="reg">
-                                    <a href="register.html">REGISTER</a>
+                                    <p>
+                                        <a href="userInfo.jsp">欢迎： ${sessionScope.user.name} </a>
+                                    </p>
                                 </div>
+                                <%
+                                    BascketDao dao = new BascketDao();
+                                    int uid = (int) session.getAttribute("uid");
+                                    System.out.println("Sweater jsp bascket get uid " + uid);
+                                    ArrayList<Bascket> list = dao.listPro(uid);
+                                    double price = 0.0;
+                                    for (int i = 0; i < list.size(); i++) {
+                                        price += list.get(i).getPrice();
+                                    }
+                                %>
+                                %>
                                 <div class="cart box_1">
-                                    <a href="checkout.jsp">
-                                        <h3><span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity"
-                                                                                               class="simpleCart_quantity">0</span>
+                                    <a href="listBascket.action">
+                                        <h3><span class="">$<%=price%></span>
+                                            (<span id=""
+                                                   class=""><%=list.size()%></span>
                                             items)<img src="images/bag.png" alt=""></h3>
                                     </a>
-                                    <p><a href="javascript:;" class="simpleCart_empty">(empty card)</a></p>
+                                    <p></p>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="create_btn">
-                                    <a href="checkout.jsp">CHECKOUT</a>
+                                    <a href="listBascket.action">CHECKOUT</a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="search">
-                                <form>
-                                    <input type="text" value="" placeholder="search...">
-                                    <input type="submit" value="">
+                                <form action="searchUPro.action" method="post">
+                                    <input type="text" value="" placeholder="查询..." name="message">
+                                    <input type="submit">
                                 </form>
                             </div>
                             <div class="clearfix"></div>
@@ -204,6 +197,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                 <label for="exampleInputPassword1">收货地址</label>
                                                 <input type="text" class="form-control" value="<%=request.getParameter("addr")%>"
                                                        name="order.addr">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">留言信息</label>
+                                                <input type="text" class="form-control" value="<%=request.getParameter("note")%>"
+                                                       name="order.note">
                                             </div>
                                             <button type="submit" class="btn btn-default">提交</button>
                                         </form>
@@ -270,7 +268,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>
                         <div class="col-md-2 myac">
                             <h4>MY ACCOUNT</h4>
-                            <li><a href="register.html">Register</a></li>
+                            <li><a href="register.jsp">Register</a></li>
                             <li><a href="checkout.jsp">My Cart</a></li>
                             <li><a href="checkout.jsp">Order History</a></li>
                             <li><a href="details.jsp">Payment</a></li>
@@ -304,38 +302,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
             <ul id="menu">
-                <li><a href="index.jsp"><i class="fa fa-tachometer"></i> <span>Home</span></a></li>
-                <li id="menu-academico"><a href="#"><i class="fa fa-table"></i> <span> New Arrivals</span> <span
-                        class="fa fa-angle-right" style="float: right"></span></a>
-                    <ul id="menu-academico-sub">
-                        <li id="menu-academico-avaliacoes"><a href="shoes.html">Shoes</a></li>
-                        <li id="menu-academico-avaliacoes"><a href="products.html">Watches</a></li>
-                        <li id="menu-academico-boletim"><a href="sunglasses.html">Sunglasses</a></li>
-                    </ul>
-                </li>
-                <li id="menu-academico"><a href="sunglasses.html"><i class="fa fa-file-text-o"></i>
-                    <span>Sunglasses</span></a></li>
-                <li><a href="sweater.jsp"><i class="lnr lnr-pencil"></i> <span>Sweater</span></a></li>
-                <li id="menu-academico"><a href="catalog.html"><i class="fa fa-file-text-o"></i>
-                    <span>Catalog</span></a></li>
-                <li id="menu-academico"><a href="shoes.html"><i class="lnr lnr-book"></i> <span>Shoes</span></a></li>
-                <li><a href="bags.html"><i class="lnr lnr-envelope"></i> <span>Bags</span></a></li>
-                <li><a href="products.html"><i class="lnr lnr-chart-bars"></i> <span>Watches</span></a></li>
-                <li id="menu-academico"><a href="#"><i class="lnr lnr-layers"></i> <span>Tabs & Calender</span> <span
-                        class="fa fa-angle-right" style="float: right"></span></a>
-                    <ul id="menu-academico-sub">
-                        <li id="menu-academico-avaliacoes"><a href="tabs.html">Tabs</a></li>
-                        <li id="menu-academico-boletim"><a href="calender.html">Calender</a></li>
+                <li><a href="index.jsp"><i class="fa fa-tachometer"></i> <span>主页</span></a></li>
 
-                    </ul>
+                <li id="menu-academico">
+                    <a href="sweater.jsp"><i class="fa fa-file-text-o"></i>
+                        <span>所有商品</span></a></li>
+                <li><a href="input.jsp"><i class="lnr lnr-pencil"></i> <span>添加商品</span></a></li>
+
+                <li>
+                    <a href="orderInfo.jsp"><i class="lnr lnr-chart-bars"></i>
+                        <span>所有订单</span>
+                    </a>
                 </li>
-                <li><a href="#"><i class="lnr lnr-chart-bars"></i> <span>Forms</span> <span class="fa fa-angle-right"
-                                                                                            style="float: right"></span></a>
-                    <ul>
-                        <li><a href="input.jsp"> Input</a></li>
-                        <li><a href="validation.html">Validation</a></li>
-                    </ul>
+                <li>
+                    <a href="userProList.action"><i class="lnr lnr-layers"></i>
+                        <span>我的商品</span>
+                    </a>
                 </li>
+
             </ul>
         </div>
     </div>
