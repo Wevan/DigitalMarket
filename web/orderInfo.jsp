@@ -181,7 +181,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="check">
                         <div class="col-md-3 cart-total">
                             <%
-                                ArrayList<Order> listOrder =new OrderService().listOrder((Integer) session.getAttribute("uid"));
+                                ArrayList<Order> listOrder = new OrderService().listOrder((Integer) session.getAttribute("uid"));
 //                                ArrayList<Order> listOrder = (ArrayList<Order>) request.getAttribute("listOrder");
                             %>
                             <a class="continue" href="#">返回首页（未添加）</a>
@@ -241,28 +241,59 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <div class="cart-item-info">
                                         <h3><a href="#"><%=listOrder.get(i).getPname()%>
                                         </a>
-                                            <span>商品号 ： <%=listOrder.get(i).getPid()%></span></h3>
+                                            <span>订单时间 ： <%=listOrder.get(i).getOrder_time()%></span></h3>
                                         <ul class="qty">
                                             <li><p><%=listOrder.get(i).getTotal()%>
                                             </p></li>
-                                            <li><p>电话 ：<%=listOrder.get(i).getPhone()%><<br>
-                                                地址 : <%=listOrder.get(i).getAddr()%>
-                                            </p></li>
+                                            <li>
+                                                <p>
+                                                    电话 ：<%=listOrder.get(i).getPhone()%>&nbsp;&nbsp;
+                                                    收件人姓名 ：<%=listOrder.get(i).getBname()%>
+                                                </p>
+                                            </li>
                                         </ul>
 
                                         <div class="delivery">
                                             <p>
-                                            <form action="deleteOrder.action" method="post">
-                                                <input value="<%=listOrder.get(i).getId()%>" style="display: none"
-                                                       name="order.id">
-                                                <button class="btn btn-default">删除</button>
-                                            </form>
+                                                地址 : <%=listOrder.get(i).getAddr()%>
                                             </p>
                                             <span>
+                                                <%
+                                                    int uid = (Integer) session.getAttribute("uid");
+                                                    int sid = listOrder.get(i).getSid();
+                                                    System.out.println("Order "+i+" active is "+listOrder.get(i).getActive());
+                                                    if (listOrder.get(i).getActive() != 0) {
+                                                %>
+                                                <p>订单状态已关闭</p>
+                                                <%
+                                                } else {
+                                                %>
+                                                <a class="btn btn-default"
+                                                   href="closeOrder.action?order.id=<%=listOrder.get(i).getId()%>&order.active=<%=uid==sid?2:1%>">关闭</a>&nbsp;&nbsp;&nbsp;
 
-                                                <form action="modifyOrder.jsp?id=<%=listOrder.get(i).getId()%>&bname=<%=listOrder.get(i).getBname()%>&phone=<%=listOrder.get(i).getPhone()%>&addr=<%=listOrder.get(i).getAddr()%>" method="post">
-                                                    <button class="btn btn-default">修改</button>
-                                                </form>
+                                                <%
+                                                    if (sid == uid && !listOrder.get(i).isSend()) {
+                                                %>
+                                                <a class="btn btn-default"
+                                                   href="sendPro.action?order.id=<%=listOrder.get(i).getId()%>">发货</a>&nbsp;&nbsp;&nbsp;
+                                                <%
+                                                } else if (sid != uid && !listOrder.get(i).isState()) {
+                                                %>
+                                                <a class="btn btn-default"
+                                                   href="deleteOrder.action?order.id=<%=listOrder.get(i).getId()%>">收货</a>&nbsp;&nbsp;&nbsp;
+                                                <%
+                                                    }
+                                                    if ((sid != uid && !listOrder.get(i).isState()) || (sid == uid && !listOrder.get(i).isSend())) {
+                                                %>
+                                                <a class="btn btn-default"
+                                                   href="deleteOrder.action?order.id=<%=listOrder.get(i).getId()%>">删除</a>&nbsp;&nbsp;&nbsp;
+                                                <a class="btn btn-default"
+                                                   href="modifyOrder.jsp?id=<%=listOrder.get(i).getId()%>&bname=<%=listOrder.get(i).getBname()%>&phone=<%=listOrder.get(i).getPhone()%>&addr=<%=listOrder.get(i).getAddr()%>">修改</a>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
+
                                             </span>
                                             <div class="clearfix"></div>
                                         </div>

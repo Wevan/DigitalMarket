@@ -4,6 +4,7 @@ import bean.Order;
 import bean.User;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.struts2.ServletActionContext;
 import service.OrderService;
 import service.ProductService;
@@ -58,10 +59,31 @@ public class OrderAction extends ActionSupport {
     }
 
     public String modifyOrder() throws Exception{
-        System.out.println("Order Action get the oid "+order.getId());
         orderService=new OrderService();
         orderService.modifyOrder(order);
         listOrder();
+        return SUCCESS;
+    }
+
+    public String insertOrders() throws Exception{
+        orderService=new OrderService();
+        ArrayList<Order> orders= (ArrayList<Order>) ActionContext.getContext().getSession().get("bascketToOrder");
+        for (int i = 0; i < orders.size(); i++) {
+            System.out.println("Bascket Order has "+orders.get(i).getBname());
+        }
+        orderService.insertOrders(orders);
+        return SUCCESS;
+    }
+
+    public String sendPro() throws Exception{
+        orderService=new OrderService();
+        orderService.sendPro(order.getId());
+        return SUCCESS;
+    }
+
+    public String closeOrder() throws Exception{
+        orderService=new OrderService();
+        orderService.colseOrder(order.getId(),order.getActive());
         return SUCCESS;
     }
 }

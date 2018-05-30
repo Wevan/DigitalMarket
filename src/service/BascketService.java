@@ -19,4 +19,10 @@ public class BascketService {
         bascketDao=new BascketDao();
         return bascketDao.listPro(uid);
     }
+
+    public void deletePro(int id) throws Exception{
+        bascketDao=new BascketDao();
+        bascketDao.deletePro(id);
+
+    }
 }
