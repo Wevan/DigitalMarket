@@ -29,7 +29,7 @@
         </action>
 
         <action name="findOne" class="action.ProductAction" method="findOne">
-            <result name="success" >/detailone.jsp</result>
+            <result name="success">/detailone.jsp</result>
         </action>
 
         <action name="directOrder" class="action.OrderAction" method="execute">
@@ -56,6 +56,16 @@
             <result name="success">/bascket.jsp</result>
         </action>
 
+
+        <!--用户更新信息-->
+        <action name="updateUser" class="action.UserAction" method="updateUserById">
+            <result name="success">/userInfo.jsp</result>
+        </action>
+
+        <!--商品查询-->
+        <action name="search" class="action.ProductAction" method="search">
+            <result name="success">/show.jsp</result>
+
         <action name="delBascket" class="action.BascketAction" method="deletePro">
             <result name="success">/bascket.jsp</result>
         </action>
@@ -70,6 +80,7 @@
 
         <action name="closeOrder" class="action.OrderAction" method="closeOrder">
             <result name="success">/orderInfo.jsp</result>
+
         </action>
     </package>
 </struts>

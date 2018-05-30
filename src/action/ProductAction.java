@@ -14,11 +14,20 @@ import java.util.ArrayList;
 
 public class ProductAction extends ActionSupport {
     private Product product;
+    private String message;
     private File uploadImage; //得到上传的文件
     private String uploadImageContentType; //得到文件的类型
     private String uploadImageFileName; //得到文件的名称
     private ProductService productService;
 
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public File getUploadImage() {
         return uploadImage;
@@ -87,11 +96,18 @@ public class ProductAction extends ActionSupport {
         return SUCCESS;
     }
 
-    public String findOne(){
-        productService=new ProductService();
-        int pid= Integer.parseInt(ServletActionContext.getRequest().getParameter("id"));
-        Product product=productService.findOne(pid);
+    public String findOne() {
+        productService = new ProductService();
+        int pid = Integer.parseInt(ServletActionContext.getRequest().getParameter("id"));
+        Product product = productService.findOne(pid);
         ActionContext.getContext().put("proone", product);
+        return SUCCESS;
+    }
+
+    public String search() {
+        System.out.println(message);
+        productService = new ProductService();
+        ActionContext.getContext().put("products", productService.searchProduct(message));
         return SUCCESS;
     }
 }

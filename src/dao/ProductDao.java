@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDao {
     private Connection conn = JDBCUtil.getConnection();
@@ -19,7 +20,7 @@ public class ProductDao {
 
 
         String sql = "insert into product(sid,description,image,price,totalnum,pname) values(?,?,?,?,?,?)";
-        System.out.println("dao is " +product.getDesc()+product.getPname());
+        System.out.println("dao is " + product.getDesc() + product.getPname());
 
         ps = conn.prepareStatement(sql);
         ps.setLong(1, product.getSid());
@@ -33,7 +34,7 @@ public class ProductDao {
         return a;
     }
 
-    public ArrayList<Product> listPro(){
+    public ArrayList<Product> listPro() {
         ArrayList<Product> list = new ArrayList<Product>();
         try {
 
@@ -54,13 +55,13 @@ public class ProductDao {
         return list;
     }
 
-    public Product findOne(int pid){
+    public Product findOne(int pid) {
         Product product = new Product();
         try {
 
             String sql = "SELECT * FROM product where id=?";
             ps = conn.prepareStatement(sql);
-            ps.setInt(1,pid);
+            ps.setInt(1, pid);
             rs = ps.executeQuery();
             while (rs.next()) {
                 product.setImage(rs.getString("image"));
@@ -74,5 +75,34 @@ public class ProductDao {
             e.printStackTrace();
         }
         return product;
+    }
+
+
+    public List<Product> findProduct(String message) {
+        List<Product> productList = new ArrayList<>();
+        //language=MySQL
+        String sql = "select *\n" +
+                "from product\n" +
+                "where pname like ?\n" +
+                "   or description like ?;";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + message + "%");
+            ps.setString(2, "%" + message + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setImage(rs.getString("image"));
+                product.setPname(rs.getString("pname"));
+                product.setPrice(rs.getDouble("price"));
+                product.setSid(rs.getInt("sid"));
+                product.setDesc(rs.getString("description"));
+                product.setId(rs.getInt("id"));
+                productList.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
     }
 }
