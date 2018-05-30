@@ -64,4 +64,17 @@ public class User {
     public void setEcode(String ecode) {
         this.ecode = ecode;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", ecode='" + ecode + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

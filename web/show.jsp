@@ -4,6 +4,7 @@
 <%@ page import="dao.BascketDao" %>
 <%@ page import="bean.Bascket" %>
 <%@ page import="dao.ProductDao" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE HTML>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -123,22 +124,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     </b>
                                 </div>
 
-                                <%
-                                    BascketDao dao = new BascketDao();
-                                    int uid = (int) session.getAttribute("uid");
-                                    System.out.println("Sweater jsp bascket get uid " + uid);
-                                    ArrayList<Bascket> list = dao.listPro(uid);
-                                    double price = 0.0;
-                                    for (int i = 0; i < list.size(); i++) {
-                                        price += list.get(i).getPrice();
-                                    }
-                                %>
 
                                 <div class="cart box_1">
                                     <a href="checkout.jsp">
-                                        <h3><span class="simpleCart_total">$<%=price%></span>
+                                        <h3><span class="simpleCart_total">$</span>
                                             (<span id="simpleCart_quantity"
-                                                   class="simpleCart_quantity"><%=list.size()%></span>
+                                                   class="simpleCart_quantity"></span>
                                             items)<img src="images/bag.png" alt=""></h3>
                                     </a>
                                     <p><a href="javascript:;" class="simpleCart_empty">(empty card)</a></p>
@@ -151,8 +142,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </div>
                             <div class="search">
                                 <form action="search.action" method="post">
-                                    <input type="text" value="" placeholder="查询..." name="message">
-                                    <input type="submit">
+                                    <input type="text"  placeholder="查询..." name="message">
+                                    <input type="submit" value="">
                                 </form>
                             </div>
                             <div class="clearfix"></div>
@@ -168,13 +159,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <!-- start content -->
                     <div class="w_content">
                         <div class="women">
-                            <%
-                                ProductDao productDao = new ProductDao();
-                                ArrayList<Product> productList = productDao.listPro();
-//                                ArrayList<Product> productList = (ArrayList<Product>) ActionContext.getContext().get("listpro");
 
-                            %>
-                            <a href="#"><h4>Enthecwear - <span><%=productList.size()%> items</span></h4></a>
+                            <a href="#"><h4>Enthecwear - <span> items</span></h4></a>
                             <ul class="w_nav">
                                 <li>Sort :</li>
                                 <li><a class="active" href="#">popular</a></li>
@@ -189,13 +175,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <div class="clearfix"></div>
                         </div>
                         <!-- grids_of_4 -->
+
                         <%
-                            for (int i = 0; i < productList.size(); i = i + 4) {
+                            List<Product> productList = (List<Product>) request.getAttribute("products");
+                            System.out.println(productList.size());
+                            int count = productList.size();
+
+
+                        %>
+                        <%
+                            for (int i = 0; i < count; i = i + 4) {
+
 
                         %>
                         <div class="grids_of_4">
                             <%
-                                for (int j = i; j < i + 4 && j < productList.size(); j++) {
+                                for (int j = i; j < i + 4 && j < count; j++) {
+
                             %>
                             <div class="grid1_of_4">
                                 <div class="content_box"><a href="/findOne.action?id=<%=productList.get(j).getId()%>">
@@ -219,16 +215,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="clearfix"></div>
                             <%
                                 }
                             %>
-
-                            <div class="clearfix"></div>
                         </div>
+
                         <%
                             }
                         %>
-
                         <!-- end grids_of_4 -->
 
 

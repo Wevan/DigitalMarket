@@ -2,16 +2,17 @@
   <artifact type="exploded-war" name="DigitalMarket:war exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/DigitalMarket_war_exploded</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="DigitalMarket/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="DigitalMarket" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Struts 2" />
           <element id="library" level="project" name="mysql-connector-java-8.0.11" />
+          <element id="library" level="project" name="commons-fileupload-1.3.2" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="DigitalMarket/web/Web2" />
+      <element id="javaee-facet-resources" facet="DigitalMarket/web/Web" />
     </root>
   </artifact>
 </component>
