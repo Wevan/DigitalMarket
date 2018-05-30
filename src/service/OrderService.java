@@ -27,4 +27,18 @@ public class OrderService {
         orderDao=new OrderDao();
         orderDao.modifyOrder(order);
     }
+
+    public void insertOrders(ArrayList<Order> orders) throws Exception{
+        orderDao=new OrderDao();
+        orderDao.insertOrders(orders);
+    }
+
+    public void sendPro(int id) throws Exception{
+        orderDao=new OrderDao();
+        orderDao.sendPro(id);
+    }
+    public void colseOrder(int id,int acode) throws Exception{
+        orderDao=new OrderDao();
+        orderDao.closeOrder(id, acode);
+    }
 }

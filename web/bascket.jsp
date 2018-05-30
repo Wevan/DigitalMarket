@@ -4,6 +4,7 @@
 <%@ page import="com.opensymphony.xwork2.ActionContext" %>
 <%@ page import="bean.Bascket" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="dao.UserDao" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
 <html>
@@ -210,7 +211,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <div class="clearfix"></div>
 
 
-                            <a class="order" href="directOrder.action">提交订单</a>
+                            <a class="order" href="insertOrders.action">提交订单</a>
                             <div class="total-item">
                                 <h3>注意</h3>
                                 <h4>COUPONS</h4>
@@ -221,24 +222,30 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="col-md-9 cart-items">
                             <h1>购物车</h1>
                             <%
+                                User user=(User) session.getAttribute("user");
                                 ArrayList<Order> orders=new ArrayList<>();
                                 for (int i = 0; i < listBckt.size(); i++) {
-                                    Bascket bascket=new Bascket();
+                                    Bascket bascket=listBckt.get(i);
+
                                     Order order=new Order();
                                     order.setPid(bascket.getPid());
                                     order.setPname(bascket.getPname());
-                                    User user=(User) session.getAttribute("user");
+                                    order.setAddr(user.getAddress());
+                                    order.setPhone(user.getPhone());
+                                    order.setEcode(user.getEcode());
+                                    order.setBname(user.getName());
                                     order.setUid(user.getId());
                                     order.setSid(bascket.getSid());
                                     order.setImage(bascket.getImage());
                                     order.setTotal(price);
                                     orders.add(order);
+                                    System.out.println("Bascket jsp has "+bascket.getPrice()+","+bascket.getPid());
                             %>
                             <div class="cart-header">
-                                <div class="close1"></div>
+                                <div class="close1"><a  href="delBascket.action?id=<%=bascket.getId()%>">.</a></div>
                                 <div class="cart-sec simpleCart_shelfItem">
                                     <div class="cart-item cyc">
-                                        <img src="<%=bascket.getImage()%>" class="img-responsive" alt="">
+                                        <img src="<%=bascket.getImage()%>" height="150px" alt="">
                                     </div>
                                     <div class="cart-item-info">
                                         <h3><a href="#"><%=bascket.getPname()%></a>
@@ -264,6 +271,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                         </div>
 
+                        <%
+                            session.setAttribute("bascketToOrder",orders);
+                        %>
 
                         <div class="clearfix"></div>
                     </div>

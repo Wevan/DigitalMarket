@@ -55,5 +55,21 @@
         <action name="listBascket" class="action.BascketAction" method="listPro">
             <result name="success">/bascket.jsp</result>
         </action>
+
+        <action name="delBascket" class="action.BascketAction" method="deletePro">
+            <result name="success">/bascket.jsp</result>
+        </action>
+
+        <action name="insertOrders" class="action.OrderAction" method="insertOrders">
+            <result name="success">/orderInfo.jsp</result>
+        </action>
+
+        <action name="sendPro" class="action.OrderAction" method="sendPro">
+            <result name="success">/orderInfo.jsp</result>
+        </action>
+
+        <action name="closeOrder" class="action.OrderAction" method="closeOrder">
+            <result name="success">/orderInfo.jsp</result>
+        </action>
     </package>
 </struts>
